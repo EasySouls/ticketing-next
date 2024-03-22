@@ -1,8 +1,8 @@
 import type { Metadata } from 'next';
 import { Akshar } from 'next/font/google';
 import './globals.css';
-import { ThemeProvider } from '@/components/theme-provider';
 import Header from '@/components/Header';
+import Providers from '@/components/Providers';
 
 const akshar = Akshar({ subsets: ['latin'] });
 
@@ -19,15 +19,10 @@ export default function RootLayout({
   return (
     <html lang='en'>
       <body className={akshar.className}>
-        <ThemeProvider
-          attribute='class'
-          defaultTheme='system'
-          enableSystem
-          disableTransitionOnChange
-        >
+        <Providers>
           <Header />
           {children}
-        </ThemeProvider>
+        </Providers>
       </body>
     </html>
   );
