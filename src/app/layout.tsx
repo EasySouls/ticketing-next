@@ -3,6 +3,7 @@ import { Akshar } from 'next/font/google';
 import './globals.css';
 import Header from '@/components/Header';
 import Providers from '@/components/Providers';
+import { Toaster } from '@/components/ui/toaster';
 
 const akshar = Akshar({ subsets: ['latin'] });
 
@@ -17,14 +18,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang='en'>
+    <html lang="en">
       <body className={akshar.className}>
         <Providers>
           <Header />
           {children}
         </Providers>
+        <Toaster />
       </body>
     </html>
   );
 }
-

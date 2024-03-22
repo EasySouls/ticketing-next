@@ -9,6 +9,23 @@ import {
 } from 'drizzle-orm/pg-core';
 import type { AdapterAccount } from '@auth/core/adapters';
 
+export type Board = typeof boards.$inferSelect;
+export type CreateBoard = typeof boards.$inferInsert;
+export type Ticket = typeof tickets.$inferSelect;
+export type CreateTicket = typeof tickets.$inferInsert;
+
+export const boards = pgTable('boards', {
+  id: serial('id').notNull().primaryKey(),
+  title: text('title').notNull(),
+  description: text('description').notNull(),
+  user_id: text('user_id')
+    .notNull()
+    .references(() => users.id, { onDelete: 'set null' }),
+  githupRepo: text('githupRepo'),
+  created_at: timestamp('created_at', { mode: 'date' }).defaultNow(),
+  updated_at: timestamp('updated_at', { mode: 'date' }).defaultNow(),
+});
+
 export const ticketPhase = pgEnum('ticket_phase', [
   'created',
   'in_progress',
@@ -16,11 +33,17 @@ export const ticketPhase = pgEnum('ticket_phase', [
   'closed',
 ]);
 
-export const ticket = pgTable('tickets', {
+export const tickets = pgTable('tickets', {
   id: serial('id').notNull().primaryKey(),
   title: text('title').notNull(),
   description: text('description').notNull(),
   status: ticketPhase('ticket_phase').notNull().default('created'),
+  boardId: integer('board_id')
+    .notNull()
+    .references(() => boards.id, { onDelete: 'cascade' }),
+  author_id: text('author_id')
+    .notNull()
+    .references(() => users.id, { onDelete: 'set null' }),
   created_at: timestamp('created_at', { mode: 'date' }).defaultNow(),
   updated_at: timestamp('updated_at', { mode: 'date' }).defaultNow(),
 });
@@ -54,7 +77,7 @@ export const accounts = pgTable(
     compoundKey: primaryKey({
       columns: [account.provider, account.providerAccountId],
     }),
-  })
+  }),
 );
 
 export const sessions = pgTable('session', {
@@ -74,5 +97,5 @@ export const verificationTokens = pgTable(
   },
   (vt) => ({
     compoundKey: primaryKey({ columns: [vt.identifier, vt.token] }),
-  })
+  }),
 );
