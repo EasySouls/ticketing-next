@@ -31,7 +31,7 @@ const formSchema = z.object({
   title: z.string().min(3).max(50),
   description: z.string().max(255),
   // owner_id: z.string().uuid(),
-  githupRepo: z.string(),
+  githubRepo: z.string(),
 });
 
 export default function CreateBoardForm() {
@@ -43,7 +43,7 @@ export default function CreateBoardForm() {
     defaultValues: {
       title: '',
       description: '',
-      githupRepo: '',
+      githubRepo: '',
     },
   });
 
@@ -108,7 +108,7 @@ export default function CreateBoardForm() {
 
         <FormField
           control={form.control}
-          name="githupRepo"
+          name="githubRepo"
           render={({ field }) => (
             <FormItem>
               <FormLabel>GitHub Repo Url</FormLabel>

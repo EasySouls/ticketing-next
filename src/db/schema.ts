@@ -21,7 +21,7 @@ export const boards = pgTable('boards', {
   user_id: text('user_id')
     .notNull()
     .references(() => users.id, { onDelete: 'set null' }),
-  githupRepo: text('githupRepo'),
+  githubRepo: text('githupRepo'),
   created_at: timestamp('created_at', { mode: 'date' }).defaultNow(),
   updated_at: timestamp('updated_at', { mode: 'date' }).defaultNow(),
 });
