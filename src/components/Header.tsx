@@ -7,7 +7,9 @@ import Link from 'next/link';
 export default function Header() {
   return (
     <header className="flex items-center dark:bg-slate-800 justify-between w-full p-4 text-foreground">
-      <h1 className="text-2xl font-semibold">Ticketing</h1>
+      <Link href="/" className="text-2xl font-semibold">
+        Ticketing
+      </Link>
       <div className="flex items-center gap-4">
         <nav>
           <Link href="/boards">Boards</Link>

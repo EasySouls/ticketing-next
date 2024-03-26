@@ -1,8 +1,19 @@
-import { Board } from '@/db/schema';
+import { getBoard } from '../actions';
 
-export default function BoardView({ board }: { board: Board }) {
+export default async function BoardPage({
+  params,
+}: {
+  params: { id: string };
+}) {
+  const board = await getBoard(params.id);
+
+  if (!board) {
+    // TODO - 404 page
+    return <div>Board not found</div>;
+  }
+
   return (
-    <div className="border p-4 rounded-lg mb-4 shadow-md dark:bg-slate-700">
+    <div className="p-4">
       <h2 className="text-xl mb-1">{board.title}</h2>
       <p>{board.description}</p>
       {board.githubRepo && (
